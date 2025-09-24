@@ -59,7 +59,7 @@ jobs:
           docker push tysonbaretto/demo-app:${{ env.VERSION }}
       
       # UPdate the K8s Manifest Files
-      - name: Update K8s Manifests
+      - name: Update K8s manifests
         run: |
           cat deploy/deploy.yaml
           sed -i "s|image: tysonbaretto/demo-app:.*|image: tysonbaretto/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
@@ -71,7 +71,7 @@ jobs:
         with:
           token: '${{ secrets.GITHUB_TOKEN }}'
 
-      - name: Update K8s manifest
+      - name: Push the updated K8s manifest to github repo
         run: |
           git add deploy/deploy.yaml
           git commit -m "Update deploy.yaml with new image version - ${{ env.VERSION }}"
