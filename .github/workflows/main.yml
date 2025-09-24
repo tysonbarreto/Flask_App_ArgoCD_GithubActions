@@ -50,19 +50,19 @@ jobs:
       # Build the Docker Image
       - name: Build Docker Image
         run: |
-          docker build -t docker.io/tysonbarretto/demo-app:${{ env.VERSION }} .
+          docker build -t tysonbaretto/demo-app:${{ env.VERSION }} .
           docker images
       
       # Push the Docker Image
       - name: Push Docker Image
         run: |
-          docker push docker.io/tysonbarretto/demo-app:${{ env.VERSION }}
+          docker push tysonbaretto/demo-app:${{ env.VERSION }}
       
       # UPdate the K8s Manifest Files
       - name: Update K8s Manifests
         run: |
           cat deploy/deploy.yaml
-          sed -i "s|image: tysonbarretto/demo-app:.*|image: tysonbarretto/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
+          sed -i "s|image: tysonbaretto/demo-app:.*|image: tysonbaretto/demo-app:${{ env.VERSION }}|g" deploy/deploy.yaml
           cat deploy/deploy.yaml
 
       # Update Github
