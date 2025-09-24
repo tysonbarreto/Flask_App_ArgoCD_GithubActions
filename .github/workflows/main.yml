@@ -66,14 +66,16 @@ jobs:
           cat deploy/deploy.yaml
 
       # Update Github
-      - name: Commit the changes
+
+      - uses: oleksiyrudenko/gha-git-credentials@v2-latest
+        with:
+          token: '${{ secrets.GITHUB_TOKEN }}'
+
+      - name: Update K8s manifest
         run: |
-          git config --global user.email "<>"
-          git config --global user.name "GitHub Actions Bot"
           git add deploy/deploy.yaml
           git commit -m "Update deploy.yaml with new image version - ${{ env.VERSION }}"
-          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}@github.com/tysonbarreto/Flask_App_ArgoCD_GithubActions.git
-          git push origin main
+          git push -u origin main
 
       
 
