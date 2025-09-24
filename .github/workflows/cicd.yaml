@@ -71,11 +71,15 @@ jobs:
           git add deploy/deploy.yaml
           git diff-index --quiet HEAD || (git commit -a -m "updated version of manifest - ${{ env.VERSION }}" --allow-empty)
           
-      - name: Push manifest changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+      - name: Commit the changes
+        run: |
+          git config --global user.email "<>"
+          git config --global user.name "GitHub Actions Bot"
+          git add deploy/deploy.yaml
+          git commit -m "Update deploy.yaml with new image version - ${{ env.VERSION }}"
+          git remote set-url origin https://github-actions:${{ secrets.GITHUB_TOKEN }}github.com/tysonbarreto/Flask_App_ArgoCD_GithubActions.git
+          git push origin main
+
 
       
 
